@@ -93,4 +93,18 @@ symfony server:start
 - No tests, security hardening, or performance optimization in MVP
 
 See [quickstart guide](../specs/001-job-portal-basic/quickstart.md) for detailed setup.
+
+## Secret Management
+
+- Do not commit environment secrets. Files like `backend/.env.dev` must not contain real values and are now ignored.
+- Use `backend/.env.local` (not committed) or real environment variables to set `APP_SECRET` and other sensitive values.
+- Generate a new secret and set it locally:
+
+```bash
+cd backend
+php -r "echo bin2hex(random_bytes(32));"  # or: openssl rand -hex 32
+echo "***REMOVED***
+```
+
+- If a secret was leaked, rotate it wherever it is used and rewrite commit history if necessary (e.g., `git filter-repo`).
 ```
