@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Privacy Policy - Student Job Market{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="display-6 mb-4">Privacy Policy</h1>
+                
+                <p class="text-muted"><small>Last updated: December 23, 2024</small></p>
+                
+                <div class="alert alert-info">
+                    <strong>Note:</strong> This is a learning project and demonstration platform. This privacy policy is provided for educational purposes.
+                </div>
+                
+                <h2 class="h4 mt-4">Information We Collect</h2>
+                <p>When you use Student Job Market, we may collect the following information:</p>
+                <ul>
+                    <li><strong>Account Information:</strong> Username, password (encrypted), and role</li>
+                    <li><strong>Job Postings:</strong> Company details, job descriptions, contact information</li>
+                    <li><strong>Usage Data:</strong> How you interact with our platform features</li>
+                </ul>
+                
+                <h2 class="h4 mt-4">How We Use Your Information</h2>
+                <p>We use collected information to:</p>
+                <ul>
+                    <li>Provide and maintain our job matching service</li>
+                    <li>Process job applications and facilitate connections</li>
+                    <li>Improve our platform based on user feedback</li>
+                    <li>Ensure platform security and prevent abuse</li>
+                </ul>
+                
+                <h2 class="h4 mt-4">Data Storage</h2>
+                <p>Your data is stored in our SQLite database with appropriate security measures:</p>
+                <ul>
+                    <li>Passwords are hashed using industry-standard methods</li>
+                    <li>Access to data is limited to necessary operations</li>
+                    <li>No sensitive personal information is stored beyond what's necessary</li>
+                </ul>
+                
+                <h2 class="h4 mt-4">Information Sharing</h2>
+                <p>We do not sell, trade, or otherwise transfer your information to third parties, except:</p>
+                <ul>
+                    <li>Job contact details are visible to potential applicants as intended</li>
+                    <li>When required by law or to protect our rights</li>
+                </ul>
+                
+                <h2 class="h4 mt-4">Your Rights</h2>
+                <p>As this is a learning project platform, you have the right to:</p>
+                <ul>
+                    <li>Access your account information</li>
+                    <li>Update or correct your data</li>
+                    <li>Request deletion of your account</li>
+                </ul>
+                
+                <h2 class="h4 mt-4">Learning Project Notice</h2>
+                <div class="alert alert-warning">
+                    <strong>Important:</strong> This platform is created for educational purposes. While we implement security best practices, this is not a production system and should not be used for actual job recruitment without proper security review.
+                </div>
+                
+                <h2 class="h4 mt-4">Contact</h2>
+                <p>If you have questions about this privacy policy, please contact us at:</p>
+                <p><a href="{{ path('app_contact') }}">Contact Page</a></p>
+                
+                <div class="mt-4 text-center">
+                    <a href="{{ path('app_home') }}" class="btn btn-primary">
+                        <i class="fas fa-home me-2"></i>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

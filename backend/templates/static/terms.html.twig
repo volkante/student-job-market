@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Terms of Service - Student Job Market{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="display-6 mb-4">Terms of Service</h1>
+                
+                <p class="text-muted"><small>Last updated: December 23, 2024</small></p>
+                
+                <div class="alert alert-info">
+                    <strong>Note:</strong> This is a learning project and demonstration platform. These terms are provided for educational purposes.
+                </div>
+                
+                <h2 class="h4 mt-4">Acceptance of Terms</h2>
+                <p>By accessing and using Student Job Market, you accept and agree to be bound by the terms and provision of this agreement.</p>
+                
+                <h2 class="h4 mt-4">Use License</h2>
+                <p>Permission is granted to temporarily use this platform for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+                <ul>
+                    <li>Modify or copy the materials</li>
+                    <li>Use the materials for any commercial purpose or for any public display</li>
+                    <li>Attempt to reverse engineer any software contained on the platform</li>
+                    <li>Remove any copyright or other proprietary notations from the materials</li>
+                </ul>
+                
+                <h2 class="h4 mt-4">User Accounts</h2>
+                <p>When you create an account with us, you must provide accurate information. You are responsible for:</p>
+                <ul>
+                    <li>Safeguarding your password and account information</li>
+                    <li>All activities that occur under your account</li>
+                    <li>Ensuring your job posts are accurate and legitimate</li>
+                </ul>
+                
+                <h2 class="h4 mt-4">Job Posting Guidelines</h2>
+                <p>Users posting jobs agree to:</p>
+                <ul>
+                    <li>Provide accurate and truthful job information</li>
+                    <li>Not post discriminatory or illegal content</li>
+                    <li>Respect student privacy and data</li>
+                    <li>Use appropriate and professional language</li>
+                </ul>
+                
+                <h2 class="h4 mt-4">Content Moderation</h2>
+                <p>We reserve the right to:</p>
+                <ul>
+                    <li>Review and approve job posts before publication</li>
+                    <li>Remove content that violates these terms</li>
+                    <li>Suspend or terminate accounts that abuse the platform</li>
+                </ul>
+                
+                <h2 class="h4 mt-4">Educational Purpose Disclaimer</h2>
+                <div class="alert alert-warning">
+                    <strong>Important:</strong> This platform is created for educational and learning purposes. While functional, it should not be used for actual recruitment without proper legal and security review. The creators are not responsible for any real-world consequences of using this platform.
+                </div>
+                
+                <h2 class="h4 mt-4">Limitation of Liability</h2>
+                <p>In no event shall Student Job Market or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use this platform.</p>
+                
+                <h2 class="h4 mt-4">Technical Standards</h2>
+                <p>This platform is built using modern web technologies:</p>
+                <ul>
+                    <li>Symfony 8.0 backend framework</li>
+                    <li>TypeScript and Bootstrap frontend</li>
+                    <li>SQLite database for development</li>
+                    <li>Industry-standard security practices</li>
+                </ul>
+                
+                <h2 class="h4 mt-4">Modifications</h2>
+                <p>Student Job Market may revise these terms of service at any time without notice. By using this platform, you are agreeing to be bound by the then current version of these terms of service.</p>
+                
+                <h2 class="h4 mt-4">Contact Information</h2>
+                <p>Questions about the Terms of Service should be sent to us at:</p>
+                <p><a href="{{ path('app_contact') }}">Contact Page</a></p>
+                
+                <div class="mt-4 text-center">
+                    <a href="{{ path('app_home') }}" class="btn btn-primary">
+                        <i class="fas fa-home me-2"></i>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
