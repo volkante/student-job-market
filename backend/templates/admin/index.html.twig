@@ -1,0 +1,191 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Dashboard - Student Job Market{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Admin Dashboard</h1>
+            <span class="badge bg-primary fs-6">Administrator</span>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ pending_jobs_count }}</h4>
+                        <p class="card-text">Pending Jobs</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-clock fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{{ path('app_admin_jobs') }}?status=pending" class="text-white text-decoration-none">
+                    View pending jobs <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ approved_jobs_count }}</h4>
+                        <p class="card-text">Approved Jobs</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-check-circle fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{{ path('app_admin_jobs') }}?status=approved" class="text-white text-decoration-none">
+                    View approved jobs <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ total_users_count }}</h4>
+                        <p class="card-text">Total Users</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <span class="text-white">Registered users</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Recent Activities</h5>
+            </div>
+            <div class="card-body">
+                <div id="loadingActivities" class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <div id="activitiesList" class="d-none">
+                    <!-- Activities will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ path('app_admin_jobs') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-list me-2"></i>
+                        Manage All Jobs
+                    </a>
+                    
+                    <a href="{{ path('app_admin_jobs') }}?status=pending" class="btn btn-warning">
+                        <i class="fas fa-clock me-2"></i>
+                        Review Pending Jobs
+                    </a>
+                    
+                    <a href="{{ path('app_home') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-eye me-2"></i>
+                        View Public Site
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">System Info</h5>
+            </div>
+            <div class="card-body">
+                <div class="small">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>PHP Version:</span>
+                        <span class="text-muted">{{ constant('PHP_VERSION') }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Symfony Version:</span>
+                        <span class="text-muted">{{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Environment:</span>
+                        <span class="badge bg-{{ app.environment == 'prod' ? 'success' : 'warning' }}">
+                            {{ app.environment }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    loadRecentActivities();
+});
+
+function loadRecentActivities() {
+    fetch('{{ path('api_admin_jobs') }}?limit=5')
+        .then(response => response.json())
+        .then(data => {
+            const loadingElement = document.getElementById('loadingActivities');
+            const activitiesList = document.getElementById('activitiesList');
+            
+            loadingElement.classList.add('d-none');
+            activitiesList.classList.remove('d-none');
+            
+            if (data.jobs && data.jobs.length > 0) {
+                const html = data.jobs.map(job => `
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <div>
+                            <h6 class="mb-1">${job.title}</h6>
+                            <small class="text-muted">${job.company} • ${job.location}</small>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-${job.status === 'approved' ? 'success' : (job.status === 'pending' ? 'warning' : 'danger')}">
+                                ${job.status}
+                            </span>
+                            <div class="small text-muted">${new Date(job.createdAt).toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                `).join('');
+                activitiesList.innerHTML = html;
+            } else {
+                activitiesList.innerHTML = '<p class="text-muted text-center">No recent activities</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error loading activities:', error);
+            document.getElementById('loadingActivities').classList.add('d-none');
+            document.getElementById('activitiesList').classList.remove('d-none');
+            document.getElementById('activitiesList').innerHTML = '<p class="text-danger text-center">Failed to load activities</p>';
+        });
+}
+</script>
+{% endblock %}

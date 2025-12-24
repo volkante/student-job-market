@@ -1,0 +1,189 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ job.title }} - {{ job.company }} - Student Job Market{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h1 class="card-title" id="jobTitle">{{ job.title }}</h1>
+                        <h2 class="h4 text-primary mb-0" id="jobCompany">{{ job.company }}</h2>
+                    </div>
+                    <div class="text-end">
+                        {% if job.salary %}
+                            <div class="h5 text-success mb-0" id="jobSalary">{{ job.salary }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-map-marker-alt text-muted me-2"></i>
+                            <span id="jobLocation">{{ job.location }}</span>
+                        </div>
+                        {% if job.startDate %}
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-calendar text-muted me-2"></i>
+                                <span>Start: {{ job.startDate|date('M d, Y') }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-2">
+                            <span class="badge bg-primary me-2" id="jobType">{{ job.employmentType|title }}</span>
+                            <span class="badge bg-secondary" id="jobField">{{ job.field }}</span>
+                        </div>
+                        <small class="text-muted">
+                            Posted: {{ job.createdAt|date('M d, Y') }}
+                        </small>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h3>Job Description</h3>
+                    <div id="jobDescription">
+                        {{ job.description|nl2br }}
+                    </div>
+                </div>
+                
+                {% if job.requirements %}
+                <div class="mb-4">
+                    <h3>Requirements</h3>
+                    <div id="jobRequirements">
+                        {{ job.requirements|nl2br }}
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% if job.benefits %}
+                <div class="mb-4">
+                    <h3>Benefits</h3>
+                    <div id="jobBenefits">
+                        {{ job.benefits|nl2br }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Apply for this job</h4>
+                <p class="card-text">Interested in this position? Get in touch with the employer directly.</p>
+                
+                <div class="d-grid gap-2">
+                    <a href="mailto:{{ job.email }}?subject=Application for {{ job.title }} at {{ job.company }}" 
+                       class="btn btn-primary btn-lg">
+                        <i class="fas fa-envelope me-2"></i>
+                        Apply Now
+                    </a>
+                    
+                    <button class="btn btn-outline-secondary" onclick="copyToClipboard('{{ job.email }}')">
+                        <i class="fas fa-copy me-2"></i>
+                        Copy Email
+                    </button>
+                </div>
+                
+                <hr>
+                
+                <div class="small">
+                    <strong>Contact Email:</strong><br>
+                    <span class="text-break">{{ job.email }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Share this job</h5>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary btn-sm" onclick="shareJob()">
+                        <i class="fas fa-share me-2"></i>
+                        Share Link
+                    </button>
+                    
+                    <a href="https://twitter.com/intent/tweet?text=Check out this job: {{ job.title }} at {{ job.company }}&url={{ app.request.uri }}" 
+                       class="btn btn-outline-info btn-sm" target="_blank">
+                        <i class="fab fa-twitter me-2"></i>
+                        Tweet
+                    </a>
+                    
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ app.request.uri }}" 
+                       class="btn btn-outline-primary btn-sm" target="_blank">
+                        <i class="fab fa-linkedin me-2"></i>
+                        LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <a href="{{ path('app_home') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>
+            Back to Job Listings
+        </a>
+    </div>
+</div>
+
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        // Show success message
+        const toast = document.createElement('div');
+        toast.className = 'toast align-items-center text-white bg-success border-0';
+        toast.setAttribute('role', 'alert');
+        toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">
+                    Email copied to clipboard!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        `;
+        
+        // Create toast container if it doesn't exist
+        let toastContainer = document.getElementById('toastContainer');
+        if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.id = 'toastContainer';
+            toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+            document.body.appendChild(toastContainer);
+        }
+        
+        toastContainer.appendChild(toast);
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+        
+        // Remove toast element after it's hidden
+        toast.addEventListener('hidden.bs.toast', () => {
+            toast.remove();
+        });
+    }).catch(function(err) {
+        console.error('Failed to copy email: ', err);
+        alert('Failed to copy email. Please copy manually: ' + text);
+    });
+}
+
+function shareJob() {
+    if (navigator.share) {
+        navigator.share({
+            title: document.getElementById('jobTitle').textContent + ' at ' + document.getElementById('jobCompany').textContent,
+            text: 'Check out this job opportunity!',
+            url: window.location.href
+        }).catch(console.error);
+    } else {
+        // Fallback: copy link to clipboard
+        copyToClipboard(window.location.href);
+    }
+}
+</script>
+{% endblock %}

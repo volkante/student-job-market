@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact - Student Job Market{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="display-5 mb-4">Contact Us</h1>
+                
+                <p class="lead">Have questions or need assistance? We'd love to hear from you!</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h3><i class="fas fa-envelope text-primary me-2"></i>Get in Touch</h3>
+                        <p>For general inquiries, technical support, or partnership opportunities, please don't hesitate to reach out.</p>
+                        
+                        <div class="mb-3">
+                            <strong>Email:</strong><br>
+                            <a href="mailto:info@studentjobmarket.com">info@studentjobmarket.com</a>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <strong>Support:</strong><br>
+                            <a href="mailto:support@studentjobmarket.com">support@studentjobmarket.com</a>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <strong>Partnerships:</strong><br>
+                            <a href="mailto:partnerships@studentjobmarket.com">partnerships@studentjobmarket.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h3><i class="fas fa-question-circle text-primary me-2"></i>Frequently Asked</h3>
+                        
+                        <div class="accordion" id="faqAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        How do I post a job?
+                                    </button>
+                                </h2>
+                                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        First, create an account or log in. Then navigate to "Post a Job" from the main menu. Fill out the job details and submit for approval.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        How long does job approval take?
+                                    </button>
+                                </h2>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Job posts are typically reviewed and approved within 24-48 hours by our admin team to ensure quality and relevance.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                        Is this platform free to use?
+                                    </button>
+                                </h2>
+                                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Yes! This is a learning project and completely free for both students and employers to use.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4 p-3 bg-light rounded">
+                    <h5><i class="fas fa-code text-info me-2"></i>Technical Information</h5>
+                    <p class="mb-0">This is a learning project built with Symfony, TypeScript, and Bootstrap. For technical questions or contributions, please check our project documentation.</p>
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <a href="{{ path('app_home') }}" class="btn btn-primary me-2">
+                        <i class="fas fa-home me-2"></i>
+                        Back to Home
+                    </a>
+                    <a href="{{ path('app_about') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

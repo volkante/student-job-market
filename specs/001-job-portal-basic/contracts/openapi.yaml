@@ -1,0 +1,161 @@
+openapi: 3.0.3
+info:
+  title: Student Job Market API
+  version: 0.1.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /api/jobs:
+    get:
+      summary: List approved jobs
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/JobListItem"
+    post:
+      summary: Create a new job (requires login)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JobCreate"
+      responses:
+        "201":
+          description: Created (pending approval)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+  /api/jobs/{id}:
+    get:
+      summary: Get job detail
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+        "404":
+          description: Not found
+  /api/admin/jobs/pending:
+    get:
+      summary: List pending jobs (admin)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Job"
+  /api/admin/jobs/{id}/approve:
+    post:
+      summary: Approve a pending job (admin)
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        "200":
+          description: Approved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+        "404":
+          description: Not found
+  /api/auth/signup:
+    post:
+      summary: Create user account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Signup"
+      responses:
+        "201":
+          description: Created
+  /api/auth/login:
+    post:
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Login"
+      responses:
+        "200":
+          description: Logged in
+  /api/auth/logout:
+    post:
+      summary: Logout
+      responses:
+        "200":
+          description: Logged out
+components:
+  schemas:
+    JobListItem:
+      type: object
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        company: { type: string }
+        location: { type: string }
+        field: { type: string }
+        createdAt: { type: string, format: date-time }
+    Job:
+      type: object
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        company: { type: string }
+        location: { type: string }
+        salary: { type: string }
+        startDate: { type: string, format: date }
+        employmentType: { type: string, enum: [full-time, part-time] }
+        field: { type: string }
+        email: { type: string, format: email }
+        status: { type: string, enum: [pending, approved] }
+        createdAt: { type: string, format: date-time }
+    JobCreate:
+      type: object
+      required: [title, company, location, employmentType, field, email]
+      properties:
+        title: { type: string }
+        company: { type: string }
+        location: { type: string }
+        salary: { type: string }
+        startDate: { type: string, format: date }
+        employmentType: { type: string, enum: [full-time, part-time] }
+        field: { type: string }
+        email: { type: string, format: email }
+    Signup:
+      type: object
+      required: [username, password]
+      properties:
+        username: { type: string }
+        password: { type: string, format: password }
+    Login:
+      type: object
+      required: [username, password]
+      properties:
+        username: { type: string }
+        password: { type: string, format: password }
